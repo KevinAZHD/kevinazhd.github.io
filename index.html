@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark" class="loading-splash">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KevinAZ - Portafolio</title>
+
+    <!-- Preferencias iniciales: evita parpadeos antes de cargar el JS principal. -->
+    <script>
+        (function () {
+            try {
+                var root = document.documentElement;
+                var theme = localStorage.getItem('theme');
+                var lang = localStorage.getItem('lang');
+
+                if (theme === 'light' || theme === 'dark') {
+                    root.setAttribute('data-theme', theme);
+                }
+
+                if (lang === 'en') {
+                    document.title = 'KevinAZ - Portfolio';
+                    root.lang = 'en';
+
+                    var foucStyle = document.createElement('style');
+                    foucStyle.id = 'fouc-style';
+                    foucStyle.textContent = 'body { opacity: 0 !important; transition: opacity 0.2s ease; }';
+                    document.head.appendChild(foucStyle);
+                }
+            } catch (_) { }
+        })();
+    </script>
+
+    <!-- Datos para SEO -->
+    <meta name="description"
+        content="Portfolio profesional de Kevin Adán Zamora. Técnico Superior en DAM y Especialista en Big Data e IA." />
+    <meta name="author" content="Kevin Adán Zamora" />
+    <meta name="theme-color" content="#0a0a0a" />
+
+    <!-- Datos para compartir -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="KevinAZ - Portafolio" />
+    <meta property="og:description"
+        content="Portfolio profesional de Kevin Adán Zamora. Técnico Superior en DAM y Especialista en Big Data e IA." />
+    <meta property="og:url" content="https://kevinazhd.github.io/" />
+    <meta property="og:image" content="https://kevinazhd.github.io/images/foto.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="512" />
+    <meta property="og:image:height" content="512" />
+    <meta property="og:image:alt" content="Kevin Adán Zamora - Portfolio" />
+
+    <!-- Tarjeta de Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="KevinAZ - Portafolio" />
+    <meta name="twitter:description"
+        content="Portfolio profesional de Kevin Adán Zamora. Técnico Superior en DAM y Especialista en Big Data e IA." />
+    <meta name="twitter:image" content="https://kevinazhd.github.io/images/foto.png" />
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Precarga de iconos de la pantalla de carga para aparición instantánea -->
+    <link rel="preload" as="image" href="images/icons/googlegemini.svg" type="image/svg+xml">
+    <link rel="preload" as="image" href="images/icons/claude.svg" type="image/svg+xml">
+    <link rel="preload" as="image" href="images/icons/claudecode.svg" type="image/svg+xml">
+    <link rel="preload" as="image" href="images/icons/perplexity.svg" type="image/svg+xml">
+    <link rel="preload" as="image" href="images/icons/cursor.svg" type="image/svg+xml">
+    <link rel="preload" as="image" href="images/icons/openai.svg" type="image/svg+xml">
+    <link rel="preload" as="image" href="images/icons/codex.svg" type="image/svg+xml">
+    <link rel="preload" as="image" href="images/icons/antigravity.svg" type="image/svg+xml">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body class="loading-splash">
+    <!-- Pantalla de carga -->
+    <div id="splashScreen" class="splash-screen">
+        <div class="splash-content">
+            <img id="splashIcon" src="" alt="AI Icon" class="splash-icon">
+            <h2 class="splash-text" data-es="Generando portafolio..." data-en="Generating portfolio...">Generando
+                portafolio...</h2>
+            <div class="splash-loader"></div>
+        </div>
+    </div>
+    <script>
+        (function () {
+            var splashIcons = [
+                'images/icons/googlegemini.svg',
+                'images/icons/claude.svg',
+                'images/icons/claudecode.svg',
+                'images/icons/perplexity.svg',
+                'images/icons/cursor.svg',
+                'images/icons/openai.svg',
+                'images/icons/codex.svg',
+                'images/icons/antigravity.svg'
+            ];
+
+            document.getElementById('splashIcon').src = splashIcons[Math.floor(Math.random() * splashIcons.length)];
+
+            try {
+                if (localStorage.getItem('lang') === 'en') {
+                    var splashText = document.querySelector('.splash-text');
+                    splashText.textContent = splashText.getAttribute('data-en');
+                }
+            } catch (_) { }
+        })();
+    </script>
+
+    <!-- Navegación -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#hero" class="nav-logo">KevinAZ</a>
+
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#hero" class="nav-link active" data-es="Inicio" data-en="Home">Inicio</a></li>
+                <li><a href="#about" class="nav-link" data-es="Sobre mí" data-en="About">Sobre mí</a></li>
+                <li><a href="#education" class="nav-link" data-es="Formación" data-en="Education">Formación</a></li>
+                <li><a href="#projects" class="nav-link" data-es="Proyectos" data-en="Projects">Proyectos</a></li>
+                <li><a href="#skills" class="nav-link" data-es="Habilidades" data-en="Skills">Habilidades</a></li>
+                <li><a href="#certs" class="nav-link" data-es="Certificados" data-en="Certifications">Certificados</a>
+                </li>
+                <li><a href="#contact" class="nav-link" data-es="Contacto" data-en="Contact">Contacto</a></li>
+            </ul>
+
+            <div class="nav-actions">
+                <button class="lang-toggle" id="langToggle" type="button" aria-label="Cambiar idioma">
+                    <span class="lang-label active-lang" id="langEs">ES</span>
+                    <span class="toggle-track" aria-hidden="true">
+                        <span class="toggle-thumb"></span>
+                    </span>
+                    <span class="lang-label" id="langEn">EN</span>
+                </button>
+
+                <button class="theme-toggle" id="themeToggle" type="button" aria-label="Cambiar tema">
+                    <i class="fas fa-moon" id="themeIcon"></i>
+                </button>
+
+                <button class="hamburger" id="hamburger" type="button" aria-label="Abrir menú" aria-controls="navMenu"
+                    aria-expanded="false">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Hero -->
+        <section class="hero" id="hero">
+            <div class="particles" id="particles"></div>
+
+            <div class="hero-content">
+                <div class="avatar-wrapper">
+                    <div class="avatar-ring"></div>
+                    <div class="avatar">
+                        <img src="images/foto.png" alt="Kevin Adán Zamora">
+                    </div>
+                    <div class="avatar-glow"></div>
+                </div>
+
+                <h1 class="hero-name">Kevin Adán Zamora</h1>
+                <div class="divider">
+                    <span class="divider-line"></span>
+                    <i class="fas fa-code divider-icon"></i>
+                    <span class="divider-line"></span>
+                </div>
+
+                <p class="hero-subtitle"
+                    data-es="Técnico Superior en Desarrollo de Aplicaciones Multiplataforma &amp; Especialista en Big Data e Inteligencia Artificial"
+                    data-en="Higher Technician in Multiplatform Application Development &amp; Big Data and Artificial Intelligence Specialist">
+                    Técnico Superior en Desarrollo de Aplicaciones Multiplataforma &amp; Especialista en Big Data e
+                    Inteligencia Artificial
+                </p>
+
+                <div class="hero-buttons">
+                    <a href="#contact" class="btn btn-primary" data-es="Contáctame" data-en="Contact Me">
+                        <i class="fas fa-paper-plane"></i> Contáctame
+                    </a>
+                    <a href="assets/CV_Kevin_Adán_Zamora.pdf" class="btn btn-outline" data-es="Descargar CV"
+                        data-en="Download CV" download="CV_Kevin_Adán_Zamora.pdf">
+                        <i class="fas fa-download"></i> Descargar CV
+                    </a>
+                </div>
+            </div>
+
+            <a href="#about" class="scroll-down" aria-label="Bajar a sobre mí">
+                <i class="fas fa-chevron-down"></i>
+            </a>
+        </section>
+
+        <!-- Sobre mí -->
+        <section class="section" id="about">
+            <div class="container">
+                <h2 class="section-title" data-es="Sobre mí" data-en="About Me">Sobre mí</h2>
+                <div class="divider">
+                    <span class="divider-line"></span>
+                    <i class="fas fa-user divider-icon-static"></i>
+                    <span class="divider-line"></span>
+                </div>
+
+                <div class="about-card card">
+                    <p data-es="Apasionado de la tecnología y la lógica de programación. Mi trayectoria combina una base técnica sólida en Desarrollo de Aplicaciones Multiplataforma (DAM) con una especialización reciente en Big Data e Inteligencia Artificial."
+                        data-en="Passionate about technology and programming logic. My career combines a solid technical foundation in Multiplatform Application Development (DAM) with a recent specialization in Big Data and Artificial Intelligence.">
+                        Apasionado de la tecnología y la lógica de programación. Mi trayectoria combina una base técnica
+                        sólida en Desarrollo de Aplicaciones Multiplataforma (DAM) con una especialización reciente en
+                        Big Data e Inteligencia Artificial.
+                    </p>
+                    <p data-es="Desde joven he demostrado facilidad para el mantenimiento de equipos y el dominio de software, lo que me permite adaptarme rápidamente a nuevos entornos tecnológicos. Me motiva resolver problemas complejos mediante la lógica y el desarrollo eficiente."
+                        data-en="Since a young age, I've shown aptitude for hardware maintenance and software mastery, allowing me to quickly adapt to new technological environments. I'm driven by solving complex problems through logic and efficient development.">
+                        Desde joven he demostrado facilidad para el mantenimiento de equipos y el dominio de software,
+                        lo que me permite adaptarme rápidamente a nuevos entornos tecnológicos. Me motiva resolver
+                        problemas complejos mediante la lógica y el desarrollo eficiente.
+                    </p>
+                    <p data-es="Soy un profesional orientado al trabajo en equipo, con capacidad para integrarme en proyectos dinámicos y aportar soluciones técnicas precisas."
+                        data-en="I am a team-oriented professional, capable of integrating into dynamic projects and providing precise technical solutions.">
+                        Soy un profesional orientado al trabajo en equipo, con capacidad para integrarme en proyectos
+                        dinámicos y aportar soluciones técnicas precisas.
+                    </p>
+                </div>
+            </div>
+
+            <a href="#education" class="scroll-down" aria-label="Bajar a formación">
+                <i class="fas fa-chevron-down"></i>
+            </a>
+        </section>
+
+        <!-- Formación -->
+        <section class="section section-alt" id="education">
+            <div class="container">
+                <h2 class="section-title" data-es="Formación" data-en="Education">Formación</h2>
+                <div class="divider">
+                    <span class="divider-line"></span>
+                    <i class="fas fa-graduation-cap divider-icon-static"></i>
+                    <span class="divider-line"></span>
+                </div>
+
+                <div class="edu-list">
+                    <article class="edu-card card">
+                        <div class="edu-badge"><i class="fas fa-brain"></i></div>
+                        <div class="edu-info">
+                            <h3 data-es="Especialización en Inteligencia Artificial y Big Data"
+                                data-en="Specialization in Artificial Intelligence and Big Data">
+                                Especialización en Inteligencia Artificial y Big Data
+                            </h3>
+                            <p class="edu-school">
+                                <a href="https://cifpcarlos3.es/es/cursos/Inteligencia-Artificial-y-Big-Data"
+                                    target="_blank" rel="noopener">CIFP Carlos III ↗</a>
+                            </p>
+                            <div class="edu-meta">
+                                <span>2025 — 2026</span>
+                                <span class="edu-grade" data-es="Nota media: 9,2" data-en="GPA: 9.2">Nota media:
+                                    9,2</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="edu-card card">
+                        <div class="edu-badge"><i class="fas fa-laptop-code"></i></div>
+                        <div class="edu-info">
+                            <h3 data-es="CFGS Desarrollo de Aplicaciones Multiplataforma"
+                                data-en="Higher Degree in Multiplatform Application Development">
+                                CFGS Desarrollo de Aplicaciones Multiplataforma
+                            </h3>
+                            <p class="edu-school">
+                                <a href="https://colegiomiralmonte.es/oferta-educativa/formacion-profesional-fp-mbs/tecnico-superior-en-desarrollo-de-aplicaciones-multiplataforma-dam/"
+                                    target="_blank" rel="noopener">MBS Miralmonte ↗</a>
+                            </p>
+                            <div class="edu-meta">
+                                <span>2023 — 2025</span>
+                                <span class="edu-grade" data-es="Nota media: 7,93" data-en="GPA: 7.93">Nota media:
+                                    7,93</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+
+            <a href="#projects" class="scroll-down" aria-label="Bajar a proyectos">
+                <i class="fas fa-chevron-down"></i>
+            </a>
+        </section>
+
+        <!-- Proyectos -->
+        <section class="section" id="projects">
+            <div class="container">
+                <h2 class="section-title" data-es="Proyectos" data-en="Projects">Proyectos</h2>
+                <div class="divider">
+                    <span class="divider-line"></span>
+                    <i class="fas fa-rocket divider-icon-static"></i>
+                    <span class="divider-line"></span>
+                </div>
+
+                <div class="grid grid-3 projects-grid" id="projectsGrid"></div>
+            </div>
+
+            <a href="#skills" class="scroll-down" aria-label="Bajar a habilidades">
+                <i class="fas fa-chevron-down"></i>
+            </a>
+        </section>
+
+        <!-- Habilidades -->
+        <section class="section section-alt" id="skills">
+            <div class="container">
+                <h2 class="section-title" data-es="Habilidades" data-en="Skills">Habilidades</h2>
+                <div class="divider">
+                    <span class="divider-line"></span>
+                    <i class="fas fa-cogs divider-icon-static"></i>
+                    <span class="divider-line"></span>
+                </div>
+
+                <div class="skills-list" id="skillsList"></div>
+            </div>
+
+            <a href="#certs" class="scroll-down" aria-label="Bajar a certificados">
+                <i class="fas fa-chevron-down"></i>
+            </a>
+        </section>
+
+        <!-- Certificados -->
+        <section class="section" id="certs">
+            <div class="container">
+                <h2 class="section-title" data-es="Certificados" data-en="Certifications">Certificados</h2>
+                <div class="divider">
+                    <span class="divider-line"></span>
+                    <i class="fas fa-certificate divider-icon-static"></i>
+                    <span class="divider-line"></span>
+                </div>
+
+                <div class="grid grid-3">
+                    <a href="https://drive.google.com/file/d/1I7EZd6ekuXvajn8RTZzng3aAQ3Wq_Eoq/view" target="_blank"
+                        rel="noopener" class="cert-card card">
+                        <img src="images/previews/cert_desarrollo_ia.png" alt="Certificado Desarrollo con IA"
+                            class="cert-img">
+                        <h3 data-es="Desarrollo con IA — BIG school" data-en="AI Development — BIG school">
+                            Desarrollo con IA — BIG school
+                        </h3>
+                        <p>6h · 14/12/2025</p>
+                        <span class="cert-link" data-es="Ver certificado ↗" data-en="View certificate ↗">
+                            Ver certificado ↗
+                        </span>
+                    </a>
+                </div>
+            </div>
+
+            <a href="#contact" class="scroll-down" aria-label="Bajar a contacto">
+                <i class="fas fa-chevron-down"></i>
+            </a>
+        </section>
+
+        <!-- Contacto -->
+        <section class="section section-alt" id="contact">
+            <div class="container">
+                <h2 class="section-title" data-es="Contacto" data-en="Contact">Contacto</h2>
+                <div class="divider">
+                    <span class="divider-line"></span>
+                    <i class="fas fa-envelope divider-icon-static"></i>
+                    <span class="divider-line"></span>
+                </div>
+
+                <div class="contact-location">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Cuevas de Reyllo, Murcia</span>
+                </div>
+
+                <div class="contact-row">
+                    <a href="mailto:kevin.adan.zamora@gmail.com" class="contact-item card">
+                        <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                        <h3>Email</h3>
+                        <p>kevin.adan.zamora@gmail.com</p>
+                    </a>
+                    <a href="https://www.linkedin.com/in/kevinazhd/" target="_blank" rel="noopener"
+                        class="contact-item card">
+                        <div class="contact-icon"><i class="fab fa-linkedin-in"></i></div>
+                        <h3>LinkedIn</h3>
+                        <p data-es="Conectemos" data-en="Let's connect">Conectemos</p>
+                    </a>
+                    <a href="https://github.com/KevinAZHD" target="_blank" rel="noopener" class="contact-item card">
+                        <div class="contact-icon"><i class="fab fa-github"></i></div>
+                        <h3>GitHub</h3>
+                        <p>KevinAZHD</p>
+                    </a>
+                    <a href="tel:+34609156632" class="contact-item card">
+                        <div class="contact-icon"><i class="fas fa-phone"></i></div>
+                        <h3 data-es="Teléfono" data-en="Phone">Teléfono</h3>
+                        <p>+34 609 15 66 32</p>
+                    </a>
+                    <a href="https://wa.me/34609156632" target="_blank" rel="noopener" class="contact-item card">
+                        <div class="contact-icon"><i class="fab fa-whatsapp"></i></div>
+                        <h3>WhatsApp</h3>
+                        <p data-es="Escríbeme" data-en="Message me">Escríbeme</p>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Pie -->
+    <footer class="footer">
+        <div class="container">
+            <p class="footer-copy" data-es="© Todos los derechos reservados." data-en="© All rights reserved.">
+                © Todos los derechos reservados.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Modal de proyecto -->
+    <div class="modal-overlay" id="projectModal" aria-hidden="true">
+        <div class="modal-content card">
+            <button class="modal-close" id="modalClose" aria-label="Cerrar modal"><i class="fas fa-times"></i></button>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <!-- Modal de habilidades -->
+    <div class="modal-overlay" id="skillModal" aria-hidden="true">
+        <div class="modal-content card">
+            <button class="modal-close" id="skillModalClose" aria-label="Cerrar modal"><i
+                    class="fas fa-times"></i></button>
+            <div id="skillModalBody"></div>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+
+</html>
