@@ -348,7 +348,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateActiveNav(sections, navLinks) {
         let current = sections[0]?.id || '';
 
-        if (window.scrollY > 0 && window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 10) {
+        if (window.scrollY > 0 && window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 100) {
             current = sections[sections.length - 1].id;
         } else {
             current = sections.reduce((active, section) => {
@@ -513,6 +513,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d');
         refs.particles.append(canvas);
+
+        const offscreen = document.createElement('canvas');
+        const offCtx = offscreen.getContext('2d');
 
         const navbar = refs.navbar;
         const loadedImages = [];
@@ -733,14 +736,40 @@ document.addEventListener('DOMContentLoaded', () => {
         function checkHover(pos) {
             for (let i = particles.length - 1; i >= 0; i--) {
                 const p = particles[i];
-                if (Math.hypot(pos.x - p.x, pos.y - p.y) < p.radius * 1.3) {
-                    return p;
+                const dx = pos.x - p.x;
+                const dy = pos.y - p.y;
+                const dist = Math.hypot(dx, dy);
+                if (dist < p.radius * 1.3) {
+                    const cos = Math.cos(-p.angle);
+                    const sin = Math.sin(-p.angle);
+                    const rx = dx * cos - dy * sin;
+                    const ry = dx * sin + dy * cos;
+                    const imgX = rx + p.radius;
+                    const imgY = ry + p.radius;
+
+                    if (imgX >= 0 && imgX < p.size && imgY >= 0 && imgY < p.size) {
+                        const size = Math.ceil(p.size);
+                        offscreen.width = size;
+                        offscreen.height = size;
+                        offCtx.clearRect(0, 0, size, size);
+                        offCtx.drawImage(p.image, 0, 0, size, size);
+                        try {
+                            const pixel = offCtx.getImageData(Math.floor(imgX), Math.floor(imgY), 1, 1).data;
+                            if (pixel[3] > 20) {
+                                return p;
+                            }
+                        } catch (_) {
+                            return p;
+                        }
+                    }
                 }
             }
             return null;
         }
 
-        canvas.addEventListener('pointerdown', (e) => {
+        const heroEl = $('#hero');
+
+        heroEl?.addEventListener('pointerdown', (e) => {
             const pos = getMousePos(e);
             const target = checkHover(pos);
             if (target) {
@@ -750,6 +779,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 mouseVx = 0;
                 mouseVy = 0;
                 document.body.classList.add('particle-dragging');
+                canvas.style.touchAction = 'none';
                 try {
                     canvas.setPointerCapture(e.pointerId);
                 } catch (_) { }
@@ -786,12 +816,26 @@ document.addEventListener('DOMContentLoaded', () => {
                 draggedParticle.vy = clamp(draggedParticle.vy * 0.8, -maxSpeed, maxSpeed);
                 draggedParticle = null;
                 document.body.classList.remove('particle-dragging');
+                canvas.style.touchAction = '';
             }
         };
 
         canvas.addEventListener('pointerup', releaseParticle);
         canvas.addEventListener('pointercancel', releaseParticle);
         canvas.addEventListener('dragstart', (e) => e.preventDefault());
+
+        heroEl?.addEventListener('touchstart', (e) => {
+            const touch = e.touches[0];
+            if (!touch) return;
+            const rect = canvas.getBoundingClientRect();
+            const pos = {
+                x: touch.clientX - rect.left,
+                y: touch.clientY - rect.top
+            };
+            if (checkHover(pos)) {
+                e.preventDefault();
+            }
+        }, { passive: false });
 
         function updateParticles() {
             spawnParticles();
